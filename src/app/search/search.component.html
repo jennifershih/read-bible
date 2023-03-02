@@ -3,19 +3,20 @@
   <form [formGroup]="searchForm">
     <mat-form-field class="full-width" appearance="outline">
         <mat-label for="book">請選擇書卷名</mat-label>
-        <mat-select id="book" name="book" formControlName="book" required>
+        <mat-select id="book" name="book" formControlName="book" required (selectionChange)="loadText()">
           <mat-option *ngFor="let book of books" [value]="book.value">
             {{book.viewValue}}
           </mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field class="full-width" appearance="outline">
-      <mat-label for="chapter">請選擇章數</mat-label>
-      <mat-select id="chapter" name="chapter" formControlName = "chapter" required>
+      <mat-label for="chapter">請選擇章節</mat-label>
+      <mat-select id="chapter" name="chapter" formControlName = "chapter" required (selectionChange)="loadText()">
         <mat-option *ngFor="let chapter of chapters()" [value]="chapter">
           {{chapter}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </form>
+  <p *ngIf="data"> 經文：{{ data.text }} </p>
 </div>
