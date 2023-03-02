@@ -13,9 +13,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SearchComponent],
+  declarations: [AppComponent, HeaderComponent, SearchComponent, FooterComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
