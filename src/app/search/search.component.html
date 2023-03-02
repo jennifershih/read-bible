@@ -1,5 +1,6 @@
 <h2>Search</h2>
 <div class="text-center">
+  <form [formGroup]="searchForm">
     <mat-form-field class="full-width" appearance="outline">
         <mat-label for="book">請選擇書卷名</mat-label>
         <mat-select id="book" name="book" formControlName="book" required>
@@ -11,9 +12,10 @@
     <mat-form-field class="full-width" appearance="outline">
       <mat-label for="chapter">請選擇章數</mat-label>
       <mat-select id="chapter" name="chapter" formControlName = "chapter" required>
-        <mat-option *ngFor="let chapter of chapters" [value]="chapter.value">
-          {{chapter.viewValue}}
+        <mat-option *ngFor="let chapter of chapters()" [value]="chapter">
+          {{chapter}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </form>
 </div>
