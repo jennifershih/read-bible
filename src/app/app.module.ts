@@ -14,9 +14,19 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FooterComponent } from './footer/footer.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { AiqaComponent } from './aiqa/aiqa.component';
+import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SearchComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    SearchComponent,
+    FooterComponent,
+    AiqaComponent,
+    TabsComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,6 +39,7 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
