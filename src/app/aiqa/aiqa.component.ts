@@ -1,6 +1,5 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppConfig, APP_CONFIG } from '../app.config';
 
 interface Completion {
   choices: {
@@ -21,10 +20,7 @@ export class AiqaComponent {
   apiKey: string = '';
   bibleVerse: string = '';
 
-  constructor(
-    @Inject(APP_CONFIG) private appConfig: AppConfig,
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   chooseMood(mood: string) {
     this.mood = mood;
