@@ -18,6 +18,7 @@ interface Completion {
 })
 export class AiqaComponent {
   mood: string = '';
+  apiKey: string = '';
   bibleVerse: string = '';
 
   constructor(
@@ -31,7 +32,8 @@ export class AiqaComponent {
 
   async submit() {
     const prompt = `今天我的心情是 ${this.mood}，可以幫我找一個聖經經文給我嗎？請務必確保聖經經文是正確的。\n`;
-    const res = await this.createCompletion(prompt);
+    const apiKey = this.apiKey; // 從input中讀取apiKey的值
+    const res = await this.createCompletion(prompt, apiKey);
 
     if (res && res.choices && res.choices.length > 0) {
       const bibleVerse = res.choices[0].text;
@@ -39,9 +41,8 @@ export class AiqaComponent {
     }
   }
 
-  private async createCompletion(prompt: string) {
+  private async createCompletion(prompt: string, apiKey: string) {
     const endpoint = `https://api.openai.com/v1/completions`;
-    const token = this.appConfig.openApiKey;
     const body = {
       model: 'text-davinci-003',
       prompt: prompt,
@@ -54,7 +55,7 @@ export class AiqaComponent {
       .post<Completion>(endpoint, body, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${apiKey}`,
         },
       })
       .toPromise();

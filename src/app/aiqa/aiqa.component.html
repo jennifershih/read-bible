@@ -4,6 +4,10 @@
     <button mat-stroked-button (click)="chooseMood('難過')">難過</button>
 </p>
 <form class="input-container">
+    <mat-form-field class="apiKey">
+      <mat-label>請輸入你的apiKey</mat-label>
+      <input matInput [(ngModel)]="apiKey" name="apiKey" placeholder="請輸入你的apiKey">
+    </mat-form-field>
     <mat-form-field class="mood">
       <mat-label>請描述你今天的心情</mat-label>
       <input matInput [(ngModel)]="mood" name="mood" placeholder="今天的心情如何">
