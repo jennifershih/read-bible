@@ -6,11 +6,11 @@ interface BibleVerseResponse {
 }
 
 @Component({
-  selector: 'app-aiqa',
-  templateUrl: './aiqa.component.html',
-  styleUrls: ['./aiqa.component.scss'],
+  selector: 'app-generate-verse-from-mood',
+  templateUrl: './generate-verse-from-mood.component.html',
+  styleUrls: ['./generate-verse-from-mood.component.scss'],
 })
-export class AiqaComponent {
+export class GenerateVerseFromMoodComponent {
   mood: string = '';
   bibleVerse: string = '';
 

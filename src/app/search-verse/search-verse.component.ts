@@ -9,11 +9,11 @@ interface BibleBook {
 }
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss'],
+  selector: 'app-search-verse',
+  templateUrl: './search-verse.component.html',
+  styleUrls: ['./search-verse.component.scss'],
 })
-export class SearchComponent {
+export class SearchVerseComponent {
   data: any;
 
   books: BibleBook[] = [
