@@ -8,7 +8,10 @@
       <mat-label>請描述你今天的心情</mat-label>
       <input matInput [(ngModel)]="mood" name="mood" placeholder="今天的心情如何">
     </mat-form-field>
-    <button mat-stroked-button (click)=submit()>送出</button>
+    <button mat-stroked-button (click)="submit()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">送出</span>
+      <span *ngIf="isLoading">載入中...</span>
+    </button>
 </form>
 
 <div class="chat-container">

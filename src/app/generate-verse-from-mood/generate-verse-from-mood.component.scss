@@ -19,6 +19,33 @@ button:hover {
   color: #fff;
 }
 
+button.loading {
+  position: relative;
+}
+
+button.loading::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 0.25em solid rgba(0, 0, 0, 0.1);
+  border-top-color: #007bff;
+  animation: loading 1s infinite linear;
+}
+
+@keyframes loading {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
 form {
   display: flex;
   flex-direction: column;

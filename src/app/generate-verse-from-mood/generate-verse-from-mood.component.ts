@@ -11,6 +11,8 @@ interface BibleVerseResponse {
   styleUrls: ['./generate-verse-from-mood.component.scss'],
 })
 export class GenerateVerseFromMoodComponent {
+  isLoading = false;
+
   mood: string = '';
   bibleVerse: string = '';
 
@@ -21,10 +23,14 @@ export class GenerateVerseFromMoodComponent {
   }
 
   async submit() {
+    this.isLoading = true;
+
     const res = await this.createCompletion(this.mood);
     if (res && res.verse) {
       this.bibleVerse = res.verse;
     }
+
+    this.isLoading = false;
   }
   private async createCompletion(mood: string) {
     const endpoint = `http://localhost:3000/get-bible-verse-from-mood`;
