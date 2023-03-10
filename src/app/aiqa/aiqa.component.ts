@@ -12,7 +12,6 @@ interface BibleVerseResponse {
 })
 export class AiqaComponent {
   mood: string = '';
-  apiKey: string = '';
   bibleVerse: string = '';
 
   constructor(private http: HttpClient) {}
@@ -25,7 +24,6 @@ export class AiqaComponent {
     const res = await this.createCompletion(this.mood);
     if (res && res.verse) {
       this.bibleVerse = res.verse;
-      console.log(this.bibleVerse);
     }
   }
   private async createCompletion(mood: string) {
