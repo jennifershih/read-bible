@@ -33,7 +33,7 @@ export class GenerateVerseFromMoodComponent {
     this.isLoading = false;
   }
   private async createCompletion(mood: string) {
-    const endpoint = `http://localhost:3000/get-bible-verse-from-mood`;
+    const endpoint = `https://read-bible-api.vercel.app/get-bible-verse-from-mood`;
     const body = { mood: mood };
     return this.http.post<BibleVerseResponse>(endpoint, body).toPromise();
   }
