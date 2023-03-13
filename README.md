@@ -14,7 +14,7 @@ This project is built with Angular and NestJS, and use open source bible api and
 * [vercel](https://vercel.com/)
 
 ## Usage
-https://user-images.githubusercontent.com/17427142/224719067-566a5af3-dd3b-41bd-a29a-6e8ac3360883.mp4
+https://user-images.githubusercontent.com/17427142/224728239-ae648533-a668-4ceb-8181-cbe464597149.mov
 
 ## Project Link
 [https://github.com/jennifershih/read-bible](https://jennifershih.github.io/read-bible/)
