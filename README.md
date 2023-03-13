@@ -6,9 +6,9 @@ This project is built with Angular and NestJS, and use open source bible api and
 2. select or input your mood, then AI will generate suitable bible verse for you.
 
 ## Built With
-* [Angular](Angular.io)
-* [Bootstrap](Bootstrap.com)
-* [nestjs](nestjs.com)
+* [Angular](https://angular.io/)
+* [Bootstrap](https://getbootstrap.com/)
+* [nestjs](https://nestjs.com/)
 * [bible API](https://bible-api.com/)
 * [openAI API](https://platform.openai.com/overview)
 * [vercel](https://vercel.com/)
