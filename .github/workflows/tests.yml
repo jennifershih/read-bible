@@ -18,7 +18,7 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          from: 's01059810@@gmail.com'
+          from: 's01059810@gmail.com'
           to: ${{ secrets.EMAIL_TO }}
           subject: ${{ secrets.EMAIL_SUBJECT }}
           body: ${{ secrets.EMAIL_BODY }}
