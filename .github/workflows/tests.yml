@@ -16,14 +16,12 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 587
-          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-          EMAIL_TO: ${{ secrets.EMAIL_TO }}
-          EMAIL_SUBJECT: 'Push Notification'
-          EMAIL_BODY: 'There has been a push to the main branch.'
-          to: 's01059810@gmail.com'
-          from: 's01059810@gmail.com'
-          from_name: 'JenniferShih'
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          from: 's01059810@@gmail.com'
+          to: ${{ secrets.EMAIL_TO }}
+          subject: ${{ secrets.EMAIL_SUBJECT }}
+          body: ${{ secrets.EMAIL_BODY }}
 
       # 發送郵件通知
       - name: Send email notification
