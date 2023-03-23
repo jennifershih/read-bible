@@ -5,15 +5,29 @@ on:
       - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v2
+
+      # 建立並設置郵件通知
+      - name: Setup email notification
+        uses: dawidd6/action-send-mail@v3.2.0
         with:
-          node-version: 12.x
-      - name: Install package
-        run: cd app && yarn install
-      - name: Testing
-        run: cd app && yarn test
+          server_address: smtp.gmail.com
+          server_port: 587
+          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_SUBJECT: 'Push Notification'
+          EMAIL_BODY: 'There has been a push to the main branch.'
+          to: 's01059810@gmail.com'
+          from: 's01059810@gmail.com'
+          from_name: 'JenniferShih'
+
+      # 發送郵件通知
+      - name: Send email notification
+        run: |
+          echo "Sending email notification"
+          cd code/sent-email
+          python send_email.py
