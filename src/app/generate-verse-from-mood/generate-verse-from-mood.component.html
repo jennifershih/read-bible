@@ -1,19 +1,24 @@
 <h3>點選心情按鈕，或描述今天的心情，AI 將會提供你一些聖經經文。</h3>
 <p>
-    <button mat-stroked-button (click)="chooseMood('開心')">開心</button>
-    <button mat-stroked-button (click)="chooseMood('難過')">難過</button>
+  <button mat-stroked-button (click)="chooseMood('開心')">開心</button>
+  <button mat-stroked-button (click)="chooseMood('難過')">難過</button>
 </p>
 <form class="input-container">
-    <mat-form-field class="mood">
-      <mat-label>請描述你今天的心情</mat-label>
-      <input matInput [(ngModel)]="mood" name="mood" placeholder="今天的心情如何">
-    </mat-form-field>
-    <button mat-stroked-button (click)="submit()" [disabled]="isLoading">
-      <span *ngIf="!isLoading">送出</span>
-      <span *ngIf="isLoading">載入中...</span>
-    </button>
+  <mat-form-field class="mood">
+    <mat-label>請描述你今天的心情</mat-label>
+    <input
+      matInput
+      [(ngModel)]="mood"
+      name="mood"
+      placeholder="今天的心情如何"
+    />
+  </mat-form-field>
+  <button mat-stroked-button (click)="submit()" [disabled]="isLoading">
+    <span *ngIf="!isLoading">送出</span>
+    <span *ngIf="isLoading">載入中...</span>
+  </button>
 </form>
 
 <div class="chat-container">
-  <div class="chat-bubble ai-bubble" *ngIf="bibleVerse">{{bibleVerse}}</div>
+  <div class="chat-bubble ai-bubble" *ngIf="bibleVerse">{{ bibleVerse }}</div>
 </div>

@@ -1,35 +1,49 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { FooterStubComponent } from './footer/footer.component.stub';
+import { HeaderStubComponent } from './header/header.component.stub';
+import { TabsStubComponent } from './tabs/tabs.component.stub';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+  let componentHtml: HTMLElement;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
+      imports: [RouterTestingModule],
       declarations: [
-        AppComponent
+        AppComponent,
+        HeaderStubComponent,
+        TabsStubComponent,
+        FooterStubComponent,
       ],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    componentHtml = fixture.nativeElement;
+
+    fixture.detectChanges();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'read-bible'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('read-bible');
+  it('should render app-header', () => {
+    const headerElement = componentHtml.querySelector('app-header');
+    expect(headerElement).toBeTruthy();
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('read-bible app is running!');
+  it('should render app-tabs', () => {
+    const headerElement = componentHtml.querySelector('app-tabs');
+    expect(headerElement).toBeTruthy();
+  });
+
+  it('should render app-footer', () => {
+    const headerElement = componentHtml.querySelector('app-footer');
+    expect(headerElement).toBeTruthy();
   });
 });
