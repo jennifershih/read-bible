@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # 執行 unit test
+      - run: npm test -- --watch=false --browsers=ChromeHeadless
+
       # 建立並設置郵件通知
       - name: Setup email notification
         uses: dawidd6/action-send-mail@v3.2.0
