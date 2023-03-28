@@ -20,7 +20,14 @@ jobs:
       - name: Install nyc
         run: npm install --save-dev nyc@latest
 
-      - name: Run tests
+      - name: Check if nyc is installed
+        run: |
+          if ! command -v nyc &> /dev/null; then
+              echo "nyc is not installed"
+              exit 1
+          fi
+
+      - name: Run tests with nyc
         run: nyc --reporter=lcov npm test -- --watch=false --browsers=ChromeHeadless
 
       # 建立並設置郵件通知
