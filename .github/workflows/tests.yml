@@ -36,4 +36,4 @@ jobs:
           subject: ${{ secrets.EMAIL_SUBJECT }}
           body: ${{ secrets.EMAIL_BODY }}
           attach_files: |
-            coverage/lcov.info
+            ./coverage/read-bible/index.html
