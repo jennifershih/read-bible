@@ -18,14 +18,13 @@ jobs:
         run: npm install -g @angular/cli
 
       - name: Unit Testing
-        run: npm run test
+        run: npm test -- --watch=false --browsers=ChromeHeadless
 
       - name: Run tests with coverage
         env:
           CI: true
-          CHROME_BIN: /usr/bin/google-chrome
         run: |
-          npm run test -- --code-coverage --no-watch --browsers=ChromeHeadless
+          npm run test -- --code-coverage 
           npm install -D istanbul-lib-coverage istanbul-reports istanbul-api
           npx nyc report --reporter=lcov
           export COVERAGE=$(npx nyc report --reporter=text-summary | grep 'All files' | awk '{print $NF}')
