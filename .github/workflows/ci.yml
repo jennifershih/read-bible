@@ -1,0 +1,24 @@
+name: ci
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test:ci
+      - name: Notification
+        uses: dawidd6/action-send-mail@v3.2.0
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          from: 's01059810@gmail.com'
+          to: ${{ secrets.EMAIL_TO }}
+          subject: ${{ secrets.EMAIL_SUBJECT }}
+          body: ${{ secrets.EMAIL_BODY }}
