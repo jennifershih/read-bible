@@ -25,11 +25,14 @@ jobs:
           CI: true
           CHROME_BIN: /usr/bin/google-chrome
         run: |
-          npm run test -- --code-coverage --no-watch --browsers=ChromeHeadlessCI
+          npm run test -- --code-coverage --no-watch --browsers=ChromeHeadless
           npm install -D istanbul-lib-coverage istanbul-reports istanbul-api
           npx nyc report --reporter=lcov
           export COVERAGE=$(npx nyc report --reporter=text-summary | grep 'All files' | awk '{print $NF}')
           echo "Coverage: $COVERAGE" >> coverage.txt
+
+      - name: Compress coverage report
+        run: zip -r coverage.zip coverage
 
       # 建立並設置郵件通知
       - name: Setup email notification
@@ -42,4 +45,5 @@ jobs:
           from: 's01059810@gmail.com'
           to: ${{ secrets.EMAIL_TO }}
           subject: ${{ secrets.EMAIL_SUBJECT }}
-          body: ${{ secrets.EMAIL_BODY }}$(cat coverage.txt)
+          body: ${{ secrets.EMAIL_BODY }}
+          attachments: coverage.zip
