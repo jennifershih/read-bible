@@ -18,7 +18,7 @@ jobs:
         run: npm install -g @angular/cli
 
       - name: Run tests
-        run: npm test -- --watch=false --browsers=ChromeHeadless
+        run: nyc --reporter=lcov npm test -- --watch=false --browsers=ChromeHeadless
 
       # 建立並設置郵件通知
       - name: Setup email notification
@@ -32,3 +32,5 @@ jobs:
           to: ${{ secrets.EMAIL_TO }}
           subject: ${{ secrets.EMAIL_SUBJECT }}
           body: ${{ secrets.EMAIL_BODY }}
+          attach_files: |
+            coverage/lcov.info
