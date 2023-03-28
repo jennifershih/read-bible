@@ -8,10 +8,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
       - uses: actions/checkout@v2
 
-      # 執行 unit test
-      - run: npm test -- --watch=false --browsers=ChromeHeadless
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Run tests
+        run: npm test -- --watch=false --browsers=ChromeHeadless
 
       # 建立並設置郵件通知
       - name: Setup email notification
