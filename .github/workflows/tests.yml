@@ -17,6 +17,9 @@ jobs:
       - name: Install Angular CLI
         run: npm install -g @angular/cli
 
+      - name: Install nyc
+        run: npm install --save-dev nyc@latest
+
       - name: Run tests
         run: nyc --reporter=lcov npm test -- --watch=false --browsers=ChromeHeadless
 
