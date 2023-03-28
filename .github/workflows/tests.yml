@@ -23,6 +23,17 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
 
+     - name: Check if test report exists
+        run: |
+          if [ -f ./coverage/read-bible/index.html ]; then
+            echo "Test report exists"
+            echo "Attachments:"
+            ls -lh ./coverage/read-bible/
+          else
+            echo "Test report does not exist"
+            exit 1
+          fi
+
       # 建立並設置郵件通知
       - name: Setup email notification
         uses: dawidd6/action-send-mail@v3.2.0
