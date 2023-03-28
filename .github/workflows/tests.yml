@@ -18,7 +18,7 @@ jobs:
         run: npm install -g @angular/cli
 
       - name: Unit Testing
-        run: npm test -- --watch=false --browsers=ChromeHeadless
+        run: npm run test:coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
