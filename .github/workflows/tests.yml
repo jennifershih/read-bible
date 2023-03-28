@@ -18,21 +18,18 @@ jobs:
         run: npm install -g @angular/cli
 
       - name: Unit Testing
-        run: npm run test:coverage
+        run: npm run test
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-
-      - name: Check if test report exists
+      - name: Run tests with coverage
+        env:
+          CI: true
+          CHROME_BIN: /usr/bin/google-chrome
         run: |
-          if [ -f ./coverage/read-bible/index.html ]; then
-            echo "Test report exists"
-            echo "Attachments:"
-            ls -lh ./coverage/read-bible/
-          else
-            echo "Test report does not exist"
-            exit 1
-          fi
+          npm run test -- --code-coverage --no-watch --browsers=ChromeHeadlessCI
+          npm install -D istanbul-lib-coverage istanbul-reports istanbul-api
+          npx nyc report --reporter=lcov
+          export COVERAGE=$(npx nyc report --reporter=text-summary | grep 'All files' | awk '{print $NF}')
+          echo "Coverage: $COVERAGE" >> coverage.txt
 
       # 建立並設置郵件通知
       - name: Setup email notification
@@ -45,6 +42,4 @@ jobs:
           from: 's01059810@gmail.com'
           to: ${{ secrets.EMAIL_TO }}
           subject: ${{ secrets.EMAIL_SUBJECT }}
-          body: ${{ secrets.EMAIL_BODY }}
-          attach_files: |
-            ./coverage/read-bible/index.html
+          body: ${{ secrets.EMAIL_BODY }}$(cat coverage.txt)
