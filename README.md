@@ -2,7 +2,7 @@
 
 ## About The Project
 
-ReadBible is an Angular-based web application that allows users to easily browse and read bible verses, as well as get personalized verse recommendations based on their current mood.
+ReadBible is an Angular-based web application that allows users to easily browse and read bible verses, as well as get personalized verse recommendations based on their current mood via openAI API.
 
 ### Features
 
