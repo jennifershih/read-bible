@@ -18,12 +18,12 @@ jobs:
         run: npm run build
         if: startsWith(github.ref, 'refs/heads/main')
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: gh-pages
-          folder: dist
-        if: startsWith(github.ref, 'refs/heads/main')
-
+            uses: peaceiris/actions-gh-pages@v3
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              publish_dir: ./dist
+            if: startsWith(github.ref, 'refs/heads/main')
+            
   test:
     runs-on: ubuntu-latest
     steps:
