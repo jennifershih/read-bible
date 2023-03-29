@@ -1,6 +1,29 @@
 name: ci
-on: push
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+
 jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm ci
+      - name: Build
+        run: npm run build
+        if: startsWith(github.ref, 'refs/heads/main')
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: dist
+        if: startsWith(github.ref, 'refs/heads/main')
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -8,6 +31,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
       - run: npm ci
-      - run: npm run test:ci
+      - name: Unit Test
+        run: npm run test:ci
+        if: startsWith(github.ref, 'refs/heads/feature/')
