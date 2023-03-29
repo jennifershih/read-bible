@@ -3,10 +3,11 @@ on:
   push:
     branches:
       - main
-      - feature/*
+      - 'feature/**'
 
 jobs:
   build-and-deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,17 +15,16 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - name: Build
-        run: npm run build
-        if: startsWith(github.ref, 'refs/heads/main')
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+      - run: npm run build
+      - run: ng build --configuration=production --base-href=/read-bible/
+      - run: npx ngh --dir=dist/read-bible --no-silent
+      - uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages
-          folder: dist
-        if: startsWith(github.ref, 'refs/heads/main')
+          github_token: ${{ secrets.TOKEN }}
+          publish_dir: ./dist/read-bible
 
   test:
+    if: github.ref == 'refs/heads/feature/*'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,6 +32,4 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - name: Unit Test
-        run: npm run test:ci
-        if: startsWith(github.ref, 'refs/heads/feature/')
+      - run: npm run test:ci
