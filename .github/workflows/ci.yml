@@ -20,10 +20,9 @@ jobs:
       - name: Deploy
             uses: peaceiris/actions-gh-pages@v3
             with:
-              github_token: ${{ secrets.GITHUB_TOKEN }}
+              github_token: ${{ secrets.TOKEN }}
               publish_dir: ./dist
             if: startsWith(github.ref, 'refs/heads/main')
-            
   test:
     runs-on: ubuntu-latest
     steps:
