@@ -37,5 +37,6 @@ ReadBible includes a CI/CD pipeline using GitHub Actions. Every time code is pus
 ### Links
 
 - [GitHub Page](https://jennifershih.github.io/read-bible/)
+  Remind: Duo to the openAI API token has expired and a subscription system is required, the function of the "AI 心情問答區" is temporarily unavailable. For more information about the function, please refer to the following Demo video.
 - Demo
   https://user-images.githubusercontent.com/17427142/227161864-295b4d3e-c2a6-4dbd-b27c-bc72652e0e02.mov

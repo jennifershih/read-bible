@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -17,6 +16,12 @@ import { FooterComponent } from './footer/footer.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GenerateVerseFromMoodComponent } from './generate-verse-from-mood/generate-verse-from-mood.component';
 import { TabsComponent } from './tabs/tabs.component';
+import {
+  SocialAuthServiceConfig,
+  SocialLoginModule,
+  GoogleLoginProvider,
+} from '@abacritt/angularx-social-login';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,7 @@ import { TabsComponent } from './tabs/tabs.component';
     FooterComponent,
     GenerateVerseFromMoodComponent,
     TabsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,8 +46,31 @@ import { TabsComponent } from './tabs/tabs.component';
     ReactiveFormsModule,
     MatButtonModule,
     MatTabsModule,
+    SocialLoginModule,
   ],
-  providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useFactory: () => {
+        const clientId =
+          '296361301198-8pshrus8f8j51b0g3n5dublb3sq5u05k.apps.googleusercontent.com';
+        const socialAuthServiceConfig: SocialAuthServiceConfig = {
+          autoLogin: false,
+          providers: [
+            {
+              id: GoogleLoginProvider.PROVIDER_ID,
+              provider: new GoogleLoginProvider(clientId),
+            },
+          ],
+          onError: (err) => {
+            console.error(err);
+          },
+        };
+        return socialAuthServiceConfig;
+      },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

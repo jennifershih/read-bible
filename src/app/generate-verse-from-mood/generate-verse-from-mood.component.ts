@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 interface BibleVerseResponse {
   verse: string;
@@ -32,8 +33,9 @@ export class GenerateVerseFromMoodComponent {
 
     this.isLoading = false;
   }
+
   private async createCompletion(mood: string) {
-    const endpoint = `https://read-bible-api.vercel.app/get-bible-verse-from-mood`;
+    const endpoint = `${environment.apiUrl}/get-bible-verse-from-mood`;
     const body = { mood: mood };
     return this.http.post<BibleVerseResponse>(endpoint, body).toPromise();
   }
