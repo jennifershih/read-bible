@@ -1,5 +1,14 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { environment } from '../../environments/environment';
 
 interface BibleVerseResponse {
@@ -8,35 +17,46 @@ interface BibleVerseResponse {
 
 @Component({
   selector: 'app-generate-verse-from-mood',
+  imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
   templateUrl: './generate-verse-from-mood.component.html',
-  styleUrls: ['./generate-verse-from-mood.component.scss'],
+  styleUrl: './generate-verse-from-mood.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenerateVerseFromMoodComponent {
-  isLoading = false;
+  private readonly http = inject(HttpClient);
 
-  mood: string = '';
-  bibleVerse: string = '';
+  readonly moods = ['開心', '難過', '焦慮', '感恩', '疲憊'];
+  readonly mood = signal('');
+  readonly bibleVerse = signal('');
+  readonly isLoading = signal(false);
+  readonly error = signal(false);
 
-  constructor(private http: HttpClient) {}
-
-  chooseMood(mood: string) {
-    this.mood = mood;
+  chooseMood(mood: string): void {
+    this.mood.set(mood);
   }
 
-  async submit() {
-    this.isLoading = true;
-
-    const res = await this.createCompletion(this.mood);
-    if (res && res.verse) {
-      this.bibleVerse = res.verse;
+  submit(): void {
+    const mood = this.mood().trim();
+    if (!mood || this.isLoading()) {
+      return;
     }
 
-    this.isLoading = false;
-  }
-
-  private async createCompletion(mood: string) {
-    const endpoint = `${environment.apiUrl}/get-bible-verse-from-mood`;
-    const body = { mood: mood };
-    return this.http.post<BibleVerseResponse>(endpoint, body).toPromise();
+    this.isLoading.set(true);
+    this.error.set(false);
+    this.http
+      .post<BibleVerseResponse>(
+        `${environment.apiUrl}/get-bible-verse-from-mood`,
+        { mood },
+      )
+      .subscribe({
+        next: (res) => {
+          this.bibleVerse.set(res.verse);
+          this.isLoading.set(false);
+        },
+        error: () => {
+          this.error.set(true);
+          this.isLoading.set(false);
+        },
+      });
   }
 }

@@ -1,35 +1,62 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { SearchVerseComponent } from './search-verse.component';
+import { BIBLE_BOOKS } from './bible-books';
 
 describe('SearchVerseComponent', () => {
   let component: SearchVerseComponent;
-  let fixture: ComponentFixture<SearchVerseComponent>;
+  let http: HttpTestingController;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [SearchVerseComponent],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        FormsModule,
-        ReactiveFormsModule,
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [SearchVerseComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideNoopAnimations(),
       ],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(SearchVerseComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    });
+    component = TestBed.createComponent(SearchVerseComponent).componentInstance;
+    http = TestBed.inject(HttpTestingController);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  afterEach(() => http.verify());
+
+  it('lists all 66 books', () => {
+    expect(BIBLE_BOOKS).toHaveLength(66);
+  });
+
+  it('builds the chapter list for the selected book', () => {
+    expect(component.chapters()).toEqual([]);
+    component.selectBook(BIBLE_BOOKS.find((b) => b.id === 'Ruth')!);
+    expect(component.chapters()).toEqual([1, 2, 3, 4]);
+  });
+
+  it('loads the chapter in the Chinese Union Version', () => {
+    component.selectBook(BIBLE_BOOKS.find((b) => b.id === 'John')!);
+    component.selectChapter(3);
+
+    const req = http.expectOne(
+      'https://bible-api.com/John%203?translation=cuv',
+    );
+    req.flush({
+      reference: 'John 3',
+      verses: [{ verse: 16, text: '神愛世人\n' }],
+    });
+
+    expect(component.verses()).toEqual([{ verse: 16, text: '神愛世人' }]);
+    expect(component.loading()).toBe(false);
+  });
+
+  it('clears the chapter when another book is picked', () => {
+    component.selectBook(BIBLE_BOOKS[0]);
+    component.chapter.set(2);
+    component.selectBook(BIBLE_BOOKS[1]);
+    expect(component.chapter()).toBeNull();
   });
 });

@@ -1,22 +1,38 @@
-<h3>選擇書卷和章節後，可以開始閱讀聖經經文。</h3>
+<h3>選擇書卷和章節後，就可以開始閱讀和合本經文。</h3>
 <div class="text-center">
-  <form [formGroup]="searchForm">
-    <mat-form-field class="full-width" appearance="outline">
-        <mat-label for="book">請選擇書卷名</mat-label>
-        <mat-select id="book" name="book" formControlName="book" required (selectionChange)="loadText()">
-          <mat-option *ngFor="let book of books" [value]="book.value">
-            {{book.viewValue}}
-          </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field class="full-width" appearance="outline">
-      <mat-label for="chapter">請選擇章節</mat-label>
-      <mat-select id="chapter" name="chapter" formControlName = "chapter" required (selectionChange)="loadText()">
-        <mat-option *ngFor="let chapter of chapters()" [value]="chapter">
-          {{chapter}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
-  <p *ngIf="data"> 經文：{{ data.text }} </p>
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>請選擇書卷</mat-label>
+    <mat-select [value]="book()" (selectionChange)="selectBook($event.value)">
+      @for (b of books; track b.id) {
+        <mat-option [value]="b">{{ b.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>請選擇章</mat-label>
+    <mat-select
+      [value]="chapter()"
+      [disabled]="!book()"
+      (selectionChange)="selectChapter($event.value)"
+    >
+      @for (c of chapters(); track c) {
+        <mat-option [value]="c">第 {{ c }} 章</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 </div>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" />
+} @else if (error()) {
+  <p class="error">經文載入失敗，請稍後再試。</p>
+} @else if (verses().length) {
+  <article class="passage">
+    <h4>{{ book()?.name }} 第 {{ chapter() }} 章</h4>
+    @for (v of verses(); track v.verse) {
+      <p>
+        <sup>{{ v.verse }}</sup> {{ v.text }}
+      </p>
+    }
+  </article>
+}

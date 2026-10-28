@@ -1,42 +1,63 @@
-# ReadBible
+# 📖 Read Bible 大家一起讀聖經
 
-## About The Project
+[![ci](https://github.com/jennifershih/read-bible/actions/workflows/ci.yml/badge.svg)](https://github.com/jennifershih/read-bible/actions/workflows/ci.yml)
+[![Angular](https://img.shields.io/badge/Angular-22-DD0031?logo=angular&logoColor=white)](https://angular.dev)
+[![Live demo](https://img.shields.io/badge/demo-GitHub%20Pages-2ea44f)](https://jennifershih.github.io/read-bible/)
 
-ReadBible is an Angular-based web application that allows users to easily browse and read bible verses, as well as get personalized verse recommendations based on their current mood via openAI API.
+A small web app for reading the Bible in Chinese (Chinese Union Version, 和合本) and getting a verse picked for how you feel today.
 
-### Features
+**[Try it →](https://jennifershih.github.io/read-bible/)**
 
-- Browse and read bible verses by book and chapter.
-- Get personalized verse recommendations based on your current mood.
-- Includes comprehensive unit tests to ensure code quality.
+## Features
 
-### Built With
+- **Read by book and chapter** — pick any of the 66 books and a chapter; verses are shown with numbers, in the Chinese Union Version from [bible-api.com](https://bible-api.com).
+- **Verse for your mood (AI 心情問答區)** — tap a mood or describe your day, and [read-bible-api](https://github.com/jennifershih/read-bible-api) asks OpenAI for a fitting verse.
+- **Google sign-in** via `@abacritt/angularx-social-login`.
 
-- Angular
-- Bootstrap
-- nestjs
-- vercel
+> The mood feature depends on the OpenAI key of the API project. When the key is not active, the app shows a friendly error instead of a verse.
 
-### Getting started
+## Built with
 
-To get started with ReadBible, follow these steps:
+- Angular 22 — standalone components, signals, new control flow (`@if` / `@for`)
+- Angular Material
+- Vitest for unit tests, ESLint (angular-eslint) and Prettier
+- GitHub Actions → GitHub Pages
 
-1. Clone the repository: git clone https://github.com/jennifershih/read-bible.git
-2. Install dependencies: npm install
-3. Start the application: npm start
-4. Navigate to http://localhost:4200/ to view the application
+## Getting started
 
-### Running unit tests
+Requires Node.js 22+.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io)
+```bash
+git clone https://github.com/jennifershih/read-bible.git
+cd read-bible
+npm install
+npm start          # http://localhost:4200
+```
 
-### CI/CD
+In development the app calls the API at `http://localhost:3000` (see `src/environments/environment.development.ts`); run [read-bible-api](https://github.com/jennifershih/read-bible-api) locally, or point it at `https://read-bible-api.vercel.app`.
 
-ReadBible includes a CI/CD pipeline using GitHub Actions. Every time code is pushed to the main branch, the pipeline runs the unit tests and deploys the application to Vercel.
+## Scripts
 
-### Links
+| Command | What it does |
+|---|---|
+| `npm start` | Dev server with live reload |
+| `npm run build` | Production build into `dist/read-bible` |
+| `npm test` | Unit tests (Vitest) in watch mode |
+| `npm run test:ci` | Unit tests once, for CI |
+| `npm run lint` | ESLint |
+| `npm run format` | Prettier |
 
-- [GitHub Page](https://jennifershih.github.io/read-bible/)
-  Remind: Duo to the openAI API token has expired and a subscription system is required, the function of the "AI 心情問答區" is temporarily unavailable. For more information about the function, please refer to the following Demo video.
-- Demo
-  https://user-images.githubusercontent.com/17427142/227161864-295b4d3e-c2a6-4dbd-b27c-bc72652e0e02.mov
+## CI/CD
+
+Every push and pull request runs lint and tests. Pushes to `main` that pass are built and published to the `gh-pages` branch, which serves the live site.
+
+## Project structure
+
+```
+src/app
+├── app.config.ts              # providers: HTTP, animations, Google sign-in
+├── header/  footer/  tabs/    # layout
+├── login/                     # Google sign-in button and user card
+├── search-verse/              # book & chapter reader (+ bible-books.ts data)
+└── generate-verse-from-mood/  # AI verse-for-your-mood
+```

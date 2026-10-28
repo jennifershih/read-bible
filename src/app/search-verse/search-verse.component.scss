@@ -1,8 +1,8 @@
-h3{
-  color:cadetblue
+h3 {
+  color: cadetblue;
 }
 
-.text-center{
+.text-center {
   margin: 20px 0;
 }
 
@@ -10,15 +10,30 @@ h3{
   width: 100%;
   margin-bottom: 10px;
 }
-  
-p {
-    font-size: 18px;
-    line-height: 1.5; 
-    justify-content: center;
-    align-items: center;
-    text-align: justify;
-    padding: 20px;
-    margin: 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-}  
+
+.passage {
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: justify;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+
+  h4 {
+    margin-top: 0;
+  }
+
+  p {
+    margin: 0 0 8px;
+  }
+
+  sup {
+    color: cadetblue;
+    font-size: 0.7em;
+  }
+}
+
+.error {
+  color: #c62828;
+}
