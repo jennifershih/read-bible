@@ -33,21 +33,16 @@ describe('SearchVerseComponent', () => {
 
   it('builds the chapter list for the selected book', () => {
     expect(component.chapters()).toEqual([]);
-    component.selectBook(BIBLE_BOOKS.find((b) => b.id === 'Ruth')!);
+    component.selectBook(BIBLE_BOOKS.find((b) => b.id === 'RUT')!);
     expect(component.chapters()).toEqual([1, 2, 3, 4]);
   });
 
   it('loads the chapter in the Chinese Union Version', () => {
-    component.selectBook(BIBLE_BOOKS.find((b) => b.id === 'John')!);
+    component.selectBook(BIBLE_BOOKS.find((b) => b.id === 'JHN')!);
     component.selectChapter(3);
 
-    const req = http.expectOne(
-      'https://bible-api.com/John%203?translation=cuv',
-    );
-    req.flush({
-      reference: 'John 3',
-      verses: [{ verse: 16, text: '神愛世人\n' }],
-    });
+    const req = http.expectOne('https://bible-api.com/data/cuv/JHN/3');
+    req.flush({ verses: [{ verse: 16, text: '神愛世人\n' }] });
 
     expect(component.verses()).toEqual([{ verse: 16, text: '神愛世人' }]);
     expect(component.loading()).toBe(false);

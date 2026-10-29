@@ -18,7 +18,6 @@ interface Verse {
 }
 
 interface ChapterResponse {
-  reference: string;
   verses: Verse[];
 }
 
@@ -65,8 +64,8 @@ export class SearchVerseComponent {
 
     this.loading.set(true);
     this.error.set(false);
-    const reference = encodeURIComponent(`${book.id} ${chapter}`);
-    const url = `${environment.bibleApiUrl}/${reference}?translation=cuv`;
+    // Chinese Union Version (和合本) from bible-api.com's data endpoint.
+    const url = `${environment.bibleApiUrl}/data/cuv/${book.id}/${chapter}`;
 
     this.http.get<ChapterResponse>(url).subscribe({
       next: (res) => {
